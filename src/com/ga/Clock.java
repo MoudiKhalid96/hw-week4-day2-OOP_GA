@@ -17,6 +17,7 @@ class Clock {
 
 //instance methods
 	public void setTime(int hours, int minutes, int seconds) {
+		// your code goes here
 		// check if hours exceeds 24
 		// check if minutes exceeds 60
 		// check if seconds exceeds 60
