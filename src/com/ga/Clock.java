@@ -1,5 +1,8 @@
 package com.ga;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 class Clock {
 	// instance variables
 	private int hr;
@@ -8,11 +11,12 @@ class Clock {
 
 	// constructors: same name as class name. No type.
 	public Clock() { // default constructor <---------- Calls a setter method
-		// your code goes here
+		setTime(0, 0, 0);
 	}
 
 	public Clock(int hours, int minutes, int seconds) { // <---------- Calls a setter method
 		// your code goes here
+		setTime(hours, minutes, seconds);
 	}
 
 //instance methods
@@ -21,21 +25,50 @@ class Clock {
 		// check if hours exceeds 24
 		// check if minutes exceeds 60
 		// check if seconds exceeds 60
+		
+		if(hours > 24) 
+			this.hr = 0;
+		else
+			this.hr = hours;
+		
+		if(minutes > 60)
+			this.min = 0;
+		else
+			this.min = minutes;
+		
+		if(seconds > 60)
+			this.sec = 0;
+		else
+			this.sec = seconds;
 
 	} // end of setTime
 
+	
 	// mutator methods
 	public void incrementSeconds() {
-
-		// your code goes here
+		this.sec += 1;
+		
+		if(sec > 60) {
+			this.sec = 0;
+			incrementMinutes();
+		}
 	} // end incrementSeconds
 
+	
 	public void incrementMinutes() {
-		// your code goes here
+		this.min += 1;
+		
+		if(min > 60) {
+			this.min = 0;
+			incrementHours();
+		}
 	} // end incrementMinutes
 
 	public void incrementHours() {
-		// your code goes here
+		this.hr += 1;
+		
+		if(hr > 24)
+			this.hr = 0;
 	} // end incrementHours
 
 	// accessor methods
@@ -53,21 +86,36 @@ class Clock {
 
 	public void printTime() { // prints time in the form hh:mm:ss
 		// your code goes here
+		
+		Calendar calendar = Calendar.getInstance();
+		
+	    calendar.set(Calendar.HOUR_OF_DAY, getHours());
+	    calendar.set(Calendar.MINUTE, getMinutes());
+	    calendar.set(Calendar.SECOND, getSeconds());
+	    
+	    System.out.println(new SimpleDateFormat("hh:mm:ss").format(calendar.getTime()));
 	} // end printTime
 
 	public boolean equals(Clock otherClock) { // compare two times
-		boolean result = true;
+		boolean result = false;
 		// your code goes here
+		
+		if(this.hr == otherClock.getHours() && this.min == otherClock.getMinutes()) 
+			result = true;
+		
+			
 		return result;
 	} // end equals
 
 	public void makeCopy(Clock otherClock) { // object1 = object2
-		// your code goes here
+		otherClock = new Clock(this.hr, this.min, this.sec);
 	}
 
 	public Clock getCopy() { // get a copy of a given object
 		Clock temp = new Clock();
 		// your code goes here
+		temp.setTime(this.hr, this.min, this.sec);
+		
 		return temp;
 	}
 

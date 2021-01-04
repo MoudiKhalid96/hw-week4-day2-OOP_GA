@@ -8,32 +8,50 @@ public class clockApplication {
 
 	public static void main(String[] args) {
 		int ndx;
+		
 		// instantiate arrays of objects
 		Clock[] arrivalTime = new Clock[SIZE];
 		Clock[] departTime = new Clock[SIZE];
+		
 		// instantiate the object elements of arrays
 		for (ndx = 0; ndx < arrivalTime.length; ndx++) {
 			// invoke constructor with hr = 8, min = 30 and sec = 0
 			arrivalTime[ndx] = new Clock(8, 30, 0);
+			
 			// invoke constructor with hr = 15, min 30 and sec = 0
 			departTime[ndx] = new Clock(15, 30, 0);
+			
 		} // end for
+		
 			// update the arrival times of late employees
 		lateEmployees(arrivalTime); // process the whole array
+		
 		// check if two employees leave at the same time to take the same bus for
 		// example
 		int ID1 = -1, ID2 = -1;
 		boolean sameTime = false;
+		
 		System.out.println("Enter ID of employee1");
 		ID1 = read.nextInt();
+		
 		System.out.println("Enter ID of employee2");
 		ID2 = read.nextInt();
+		
+		System.out.println("Okay thanks");
+		
 		sameTime = departTime[ID1].equals(departTime[ID2]);
 		// Copy the arrival information of empLoyee ID1 to employee ID2
+		
+		System.out.println("Did they arrive at the same time? " + sameTime);
+		
 		arrivalTime[ID2].makeCopy(arrivalTime[ID1]);
+				
 		// Get a copy of the departure information of employee ID2
+		
 		Clock tempInfo = new Clock();
+		
 		tempInfo = departTime[ID2].getCopy();
+		
 		// specify the employees that deserve an overtime
 		// create a parallel array
 		boolean[] overTime = new boolean[SIZE];
