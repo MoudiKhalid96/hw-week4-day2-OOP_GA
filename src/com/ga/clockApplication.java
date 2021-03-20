@@ -7,84 +7,49 @@ public class clockApplication {
 	static final int SIZE = 100;
 
 	public static void main(String[] args) {
-		int ndx;
+		// your code goes here 
+		System.out.println("------------------"
+				+ "\nThis program is to check who has come late to work"
+				+ "\nEmpolyees must arrive to work before 9:00 AM"
+				+ "\n------------------\n");
 		
-		// instantiate arrays of objects
-		Clock[] arrivalTime = new Clock[SIZE];
-		Clock[] departTime = new Clock[SIZE];
+		System.out.print("You only have " + SIZE + " in your company !");
+		System.out.print("Enter Employee ID: ");
+		int id = read.nextInt();
 		
-		// instantiate the object elements of arrays
-		for (ndx = 0; ndx < arrivalTime.length; ndx++) {
-			// invoke constructor with hr = 8, min = 30 and sec = 0
-			arrivalTime[ndx] = new Clock(8, 30, 0);
-			
-			// invoke constructor with hr = 15, min 30 and sec = 0
-			departTime[ndx] = new Clock(15, 30, 0);
-			
-		} // end for
+		System.out.print("Enter arrival houre: ");
+		int hr = read.nextInt();
 		
-			// update the arrival times of late employees
-		lateEmployees(arrivalTime); // process the whole array
+		System.out.print("Enter arrival minute: ");
+		int min = read.nextInt();
 		
-		// check if two employees leave at the same time to take the same bus for
-		// example
-		int ID1 = -1, ID2 = -1;
-		boolean sameTime = false;
+		System.out.print("Enter arrival second: ");
+		int sec = read.nextInt();
 		
-		System.out.println("Enter ID of employee1");
-		ID1 = read.nextInt();
-		
-		System.out.println("Enter ID of employee2");
-		ID2 = read.nextInt();
-		
-		System.out.println("Okay thanks");
-		
-		sameTime = departTime[ID1].equals(departTime[ID2]);
-		// Copy the arrival information of empLoyee ID1 to employee ID2
-		
-		System.out.println("Did they arrive at the same time? " + sameTime);
-		
-		arrivalTime[ID2].makeCopy(arrivalTime[ID1]);
-				
-		// Get a copy of the departure information of employee ID2
-		
-		Clock tempInfo = new Clock();
-		
-		tempInfo = departTime[ID2].getCopy();
-		
-		// specify the employees that deserve an overtime
-		// create a parallel array
-		boolean[] overTime = new boolean[SIZE];
-		overTimedEmployees(departTime, overTime);
-	
+		Clock time = new Clock(hr, min, sec);
+		lateEmployees(time);
 	} // end main
 
-	public static void lateEmployees(Clock[] arrival) {
-		int employeeID = -1, arrivalHour = 0, arrivalMinute = 0, arrivalSecond = 0;
-		do {
-			// Assume ndx is used as employee ID
-			System.out.println("Enter employee ID or -1 to exit");
-			employeeID = read.nextInt();
-			if (employeeID == -1)
-				break;
-			System.out.println("Enter employee arrival hour");
-			arrivalHour = read.nextInt();
-			System.out.println("Enter employee arrival minute");
-			arrivalMinute = read.nextInt();
-			System.out.println("Enter employee arrival seconds");
-			arrivalSecond = read.nextInt();
-			// Update employee’s data in the array. Assume ID = ndx
-			arrival[employeeID].setTime(arrivalHour, arrivalMinute, arrivalSecond);
-		} while (employeeID != -1);
+	public static void lateEmployees(Clock arrival) {
+		int lateHours;
+		int lateMinutes;
+		
+		if(arrival.getHours() > 9 && arrival.getMinutes() > 0) {
+			lateHours = arrival.getHours() - 9;
+			lateMinutes = arrival.getMinutes();
+			
+			System.out.println("Employee has late for " + lateHours + " hour/s and " + lateMinutes + " minute/s from work !");
+			return;
+		}else if(arrival.getHours() < 9) {
+			lateHours = 9 - arrival.getHours();
+			lateMinutes = arrival.getMinutes();
+			
+			System.out.println("Employee come before work by " + lateHours + " hour/s and " + lateMinutes + " minute/s from work !");
+			return;
+		}
+		
+		System.out.println("Employee is not late");
+			
 	}// end lateEmployees
 
-	public static void overTimedEmployees(Clock[] depart, boolean[] bonus) {
-		int ndx;
-		Clock template = new Clock(15, 30, 0);
-		for (ndx = 0; ndx < depart.length; ndx++)
-			if (depart[ndx].getHours() > template.getHours()) {
-				bonus[ndx] = true;
-				System.out.printf("%d deserves a bonus %n", ndx);
-			} // end if
-	}// end overTimedEmployees
 }// end class
